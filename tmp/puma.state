@@ -1,0 +1,20 @@
+---
+pid: 8300
+config: !ruby/object:Puma::Configuration
+  options:
+    :min_threads: 0
+    :max_threads: 16
+    :quiet: false
+    :debug: false
+    :binds:
+    - tcp://10.0.1.1:9292
+    :workers: 0
+    :daemon: false
+    :worker_directory: /srv/apps/restful-printing
+    :config_file: config/puma.rb
+    :pidfile: /srv/apps/restful-printing/tmp/puma.pid
+    :state: /srv/apps/restful-printing/tmp/puma.state
+    :control_url: unix:///tmp/puma-status-1372457234831-8300
+    :control_url_temp: /tmp/puma-status-1372457234831-8300
+    :control_auth_token: 27bbbdfc6019b49ba7b904d49e227
+    :environment: development

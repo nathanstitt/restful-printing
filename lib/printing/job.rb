@@ -1,4 +1,3 @@
-require 'stringio'
 require 'curb'
 
 module Printing
@@ -12,7 +11,7 @@ module Printing
         attribute :data, Hash
         attribute :url, String
         attribute :title, String
-        attribute :data, StringIO
+        attribute :data, String
 
         attribute :job_id, Fixnum
         attribute :printer
@@ -47,7 +46,7 @@ module Printing
             if self.url
                 Curl.get( self.url ).body_str
             elsif self.data
-                self.data.read
+                self.data
             else
                 raise 'no data present'
             end

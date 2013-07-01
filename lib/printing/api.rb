@@ -4,6 +4,7 @@ module Printing
 
         format :json
 
+
         namespace :printers do
             desc "All available printers"
             get do
@@ -16,7 +17,7 @@ module Printing
 
                     desc "All jobs for printer :name"
                     get do
-                        Printer.new(:name=>params[:name]).jobs
+                        Printer.new( 'name' => params[:name] ).jobs
                     end
 
                     desc "Create new print job for printer :name.  Must have either a :url, or :data parameter specified"
@@ -24,11 +25,7 @@ module Printing
                         printer = Printer.new( :name=>params.name )
                         valid = %w{ data url }
                         attrs = params.to_h.select{ |key, value| valid.include?(key) }
-                        p params
-                        p attrs
-
                         job = Job.new( attrs )
-
                         job.title = params.title if params.title?
                         job.send_to(printer)
                     end
