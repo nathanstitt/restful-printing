@@ -22,12 +22,12 @@ module Printing
 
                     desc "Create new print job for printer :name.  Must have either a :url, or :data parameter specified"
                     post do
-                        printer = Printer.new( :name=>params.name )
                         valid = %w{ data url }
                         attrs = params.to_h.select{ |key, value| valid.include?(key) }
                         job = Job.new( attrs )
+                        job.printer = Printer.new( :name=>params.name )
                         job.title = params.title if params.title?
-                        job.send_to(printer)
+                        job.print.details
                     end
 
                     desc "return data associated with a job (currently only it's status is reported)"
@@ -36,7 +36,7 @@ module Printing
                             printer = Printer.new( :name=>params.name )
                             job = Job.new({ :job_id=>params.job_id, :printer=>printer } )
                             if job.exists?
-                                { 'state' => job.state }
+                                job.details
                             else
                                 { :success=>false, :message => "job-not-found" }
                             end

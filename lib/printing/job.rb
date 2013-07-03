@@ -27,7 +27,11 @@ module Printing
             @state = pj.state
         end
 
-        def send_to( printer )
+        def details
+            { 'state' => self.state, :id => self.job_id }
+        end
+
+        def print
             return self if @job
             tf = Tempfile.new('print-job')
             tf.write read_data
